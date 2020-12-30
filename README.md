@@ -1,24 +1,7 @@
-# vue_admin_v0.3
+# vue_admin_v0.3.1
 
-## Project setup
-```
-npm install
-```
+## 0.0.1项目搭建
 
-### Compiles and hot-reloads for development
 ```
-npm run serve
+创建基本项目，设置依赖包，引入ant-design-vue第三方组件
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

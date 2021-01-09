@@ -1,24 +1,46 @@
 <template>
   <div class="body-con">
     <div class="login-box">
+      <h2>xx后台管理系统</h2>
       <a-form
-        name="custom-validation"
-        ref="ruleForm"
-        :model="ruleForm"
-        :rules="rules"
-        v-bind="layout"
-        @finish="handleFinish"
-        @finishFailed="handleFinishFailed"
+        class="form-box"
+        layout="vertical"
+        :model="form"
+        @submit="handleSubmit"
       >
-        <a-form-item required has-feedback label="Password" name="pass">
-          <a-input v-model:value="ruleForm.pass" type="password" autocomplete="off" />
+        <a-form-item style="width: 80%">
+          <a-input
+            size="large"
+            v-model:value="form.username"
+            placeholder="Username"
+          >
+            <template #prefix
+              ><UserOutlined style="color: rgba(0, 0, 0, 0.25)"
+            /></template>
+          </a-input>
         </a-form-item>
-        <a-form-item has-feedback label="Confirm" name="checkPass">
-          <a-input v-model:value="ruleForm.checkPass" type="password" autocomplete="off" />
+        <a-form-item style="width: 80%">
+          <a-input-password
+            size="large"
+            v-model:value="form.password"
+            type="password"
+            placeholder="Password"
+          >
+            <template #prefix
+              ><LockOutlined style="color: rgba(0, 0, 0, 0.25)"
+            /></template>
+          </a-input-password>
         </a-form-item>
-        <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
-          <a-button type="primary" html-type="submit">Submit</a-button>
-          <a-button style="margin-left: 10px" @click="resetForm">Reset</a-button>
+        <a-form-item style="width: 80%">
+          <a-button
+            size="large"
+            block
+            type="primary"
+            html-type="submit"
+            :disabled="form.username === '' || form.password === ''"
+          >
+            登录
+          </a-button>
         </a-form-item>
       </a-form>
     </div>
@@ -27,67 +49,23 @@
 
 
 <script>
+import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 export default {
+  components: {
+    UserOutlined,
+    LockOutlined,
+  },
   data() {
-    let checkAge = async (rule, value, callback) => {
-      if (!value) {
-        return Promise.reject('Please input the age');
-      }
-      if (!Number.isInteger(value)) {
-        return Promise.reject('Please input digits');
-      } else {
-        if (value < 18) {
-          return Promise.reject('Age must be greater than 18');
-        } else {
-          return Promise.resolve();
-        }
-      }
-    };
-    let validatePass = async (rule, value) => {
-      if (value === '') {
-        return Promise.reject('Please input the password');
-      } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass');
-        }
-        return Promise.resolve();
-      }
-    };
-    let validatePass2 = async (rule, value, callback) => {
-      if (value === '') {
-        return Promise.reject('Please input the password again');
-      } else if (value !== this.ruleForm.pass) {
-        return Promise.reject("Two inputs don't match!");
-      } else {
-        return Promise.resolve();
-      }
-    };
     return {
-      ruleForm: {
-        pass: '',
-        checkPass: '',
-        age: '',
-      },
-      rules: {
-        pass: [{ validator: validatePass, trigger: 'change' }],
-        checkPass: [{ validator: validatePass2, trigger: 'change' }],
-        age: [{ validator: checkAge, trigger: 'change' }],
-      },
-      layout: {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 14 },
+      form: {
+        username: "",
+        password: ""
       },
     };
   },
   methods: {
-    handleFinish(values) {
-      console.log(values);
-    },
-    handleFinishFailed(errors) {
-      console.log(errors);
-    },
-    resetForm() {
-      this.$refs.ruleForm.resetFields();
+    handleSubmit(e) {
+      console.log(this.form);
     },
   },
 };

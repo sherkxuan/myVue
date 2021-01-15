@@ -1,0 +1,26 @@
+<template>
+  <div class="pd">
+    首页
+  </div>
+</template>
+
+<script>
+//import { reactive,toRefs } from "vue";
+export default {
+  data() {
+    return {
+      //name:123
+    };
+  },
+  methods: {
+    onC() {
+      return this.tit++;
+    }
+  },
+  created(){
+      
+  }
+};
+</script>
+
+<style></style>

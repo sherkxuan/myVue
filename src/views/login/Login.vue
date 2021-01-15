@@ -47,27 +47,53 @@
   </div>
 </template>
 
-
 <script>
+import { reactive, toRefs } from "vue";
+import { message } from "ant-design-vue";
+import router from "@/router/index.js";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
+//导入请求api
+import { adminLogin,isLogin } from "@/api/account";
 export default {
   components: {
     UserOutlined,
-    LockOutlined,
+    LockOutlined
   },
-  data() {
-    return {
+  setup() {
+    beforeCreate:{
+      if (localStorage.getItem("token") != null) {
+        isLogin({'token':localStorage.getItem("token")}).then(res=>{
+          if(res===true){
+            router.push("/index");
+          }
+        });
+        
+      }
+    }
+    const from = reactive({
       form: {
         username: "",
         password: ""
-      },
+      }
+    });
+    const handleSubmit = () => {
+      adminLogin(from.form).then(res => {
+        if (res.msg) {
+          localStorage.setItem("token", res.token);
+          localStorage.setItem('first_load',1)
+          message.success(res.msg);
+          router.push("/index");
+        } else {
+          message.error(res.data);
+        }
+      });
+    }
+    const data = toRefs(from);
+    return {
+      handleSubmit,
+      ...data
     };
-  },
-  methods: {
-    handleSubmit(e) {
-      console.log(this.form);
-    },
-  },
+  }
 };
 </script>
 

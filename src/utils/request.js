@@ -26,6 +26,8 @@ service.interceptors.request.use(
 // 添加响应拦截器
 service.interceptors.response.use(
   function(response) {
+    
+    //console.log('相应到此',response);
     if (response.data.code == 200) {
       return response.data.data;
     } else if (response.data.code == 201) {
@@ -34,7 +36,7 @@ service.interceptors.response.use(
       localStorage.removeItem("token");
       router.push('/')
     } else if (response.data.code == 500) {
-      alert('你好');
+      message.error(response.data.data)
       return false;
     } else {
       return response.data;
@@ -43,6 +45,7 @@ service.interceptors.response.use(
   },
   function(error) {
     // 对响应错误做点什么
+    alert(error);
     return Promise.reject(error);
   }
 );

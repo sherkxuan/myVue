@@ -30,6 +30,7 @@ import { getCurrentInstance, reactive } from 'vue';
 import { UserOutlined } from '@ant-design/icons-vue';
 import LayoutAside from "./Aside";
 import router from "@/router/index.js";
+import { message } from "ant-design-vue";
 
 import { getMyInfo } from "@/api/account";
 import { notification } from 'ant-design-vue';
@@ -60,7 +61,6 @@ export default {
                 whiteSpace:'pre-wrap'
             },
           });
-          console.log('zh')
           localStorage.removeItem("first_load");
           localStorage.setItem("userinfo", JSON.stringify(res));
           data.userinfo = res

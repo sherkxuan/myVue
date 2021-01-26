@@ -33,6 +33,7 @@
         </a-form-item>
         <a-form-item style="width: 80%">
           <a-button
+            :loading="loading"
             size="large"
             block
             type="primary"
@@ -71,19 +72,23 @@ export default {
       }
     }
     const from = reactive({
+      loading:false,
       form: {
         username: "",
         password: ""
       }
     });
     const handleSubmit = () => {
+      from.loading=true;
       adminLogin(from.form).then(res => {
         if (res.msg) {
           localStorage.setItem("token", res.token);
           localStorage.setItem('first_load',1)
           message.success(res.msg);
+          from.loading=false;
           router.push("/index");
         } else {
+          from.loading=false;
           message.error(res.data);
         }
       });

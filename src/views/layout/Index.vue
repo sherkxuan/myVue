@@ -10,7 +10,7 @@
         <LayoutHeader @clickBt="headerAction()"/>
       </a-layout-header>
       <!-- 内容区 -->
-      <a-layout-content :style="{margin: '24px 16px',padding: '24px',background: '#fff',minHeight: '280px',height:'84vh'}">
+      <a-layout-content :style="{margin: '24px 16px',padding: '24px',background: '#fff',minHeight: '280px',height:'84vh',overflow: 'overlay'}">
           <LayoutMain />
       </a-layout-content>
     </a-layout>
@@ -71,5 +71,4 @@ export default {
 };
 </script>
 <style lang="scss">
-
 </style>

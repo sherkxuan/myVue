@@ -65,7 +65,7 @@ const routes = [
       }
     ]
   },
-  //新闻管理
+  //接口管理
   {
     path: "/api",
     name: "Api",
@@ -83,6 +83,17 @@ const routes = [
           icon:"icon-API"
         },
         component: () =>import("../views/api/Api.vue"),
+       /*  children:[
+          {
+            path: "/addApi",
+            name: "ApiLog",
+            meat:{
+              title:"新增接口",
+              icon:"icon-tongji"
+            },
+            component: () =>import("../views/api/Api_log.vue"),
+          },
+        ] */
       },
       {
         path: "/api_log",

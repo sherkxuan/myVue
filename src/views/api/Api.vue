@@ -72,7 +72,8 @@
 
 <script>
 import { PlusCircleOutlined,DeleteOutlined,RedoOutlined } from '@ant-design/icons-vue';
-import { getApiList, del, setApiStatus, getApiById, delAll } from "@/api/api";
+import { getApiList, del, setApiStatus, getApiById, delAll, getApiWarning } from "@/api/api";
+import { notification } from 'ant-design-vue';
 import AddApi from "./component/AddApi.vue";
 import EditApi from "./component/EditApi.vue";
 import LookApi from "./component/LookApi.vue";
@@ -126,7 +127,7 @@ const columns = [
   },
 ];
 export default {
-  components: {PlusCircleOutlined,DeleteOutlined,RedoOutlined,AddApi,EditApi,getApiById,LookApi,delAll},
+  components: {PlusCircleOutlined,DeleteOutlined,RedoOutlined,AddApi,EditApi,getApiById,LookApi,delAll,getApiWarning,notification},
   data() {
     return {
       data:[],
@@ -146,6 +147,9 @@ export default {
   },
   created(){
     this.getList();
+    if(localStorage.getItem('api_load')!=null){
+      this.getApiWarning();
+    }
   },
   computed: {
     rowSelection() {
@@ -158,6 +162,26 @@ export default {
     },
   },
   methods:{
+    //查询次数小于1000的记录
+    getApiWarning(){
+      getApiWarning().then(res=>{
+        res.forEach(item => {
+          if(item.call_num==0){
+            notification.error({
+              duration:null,
+              message: 'API通知',
+              description:item.name+'调用次数已用完',
+            });
+          }else{
+             notification.warning({
+              message: 'API通知',
+              description:item.name+'调用次数不足,只剩'+item.call_num+'次',
+            });
+          }
+        });
+      });
+      localStorage.removeItem("api_load");
+    },
     //搜索
     onSearch(){
       //this.getList();

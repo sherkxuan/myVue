@@ -23,7 +23,6 @@ import LayoutHeader from "./component/Header";
 import router from "@/router/index.js";
 //import { notification } from 'ant-design-vue';
 import { reactive, toRefs } from "vue";
-import { getMyInfo } from "@/api/account";
 export default {
   name: "Layout",
   components: {
@@ -47,21 +46,7 @@ export default {
       }
     };
     created:{
-      /* if(localStorage.getItem('first_load')!=null){
-        getMyInfo().then(res=>{
-          notification.info({
-            message: '登录通知',
-            description:
-              '欢迎你，'+res.real_name+'\n上次登录IP：'+res.last_ip+'\n上次登录时间：'+res.last_time,
-              style: {
-                whiteSpace:'pre-wrap'
-            },
-          });
-          console.log('zh')
-          localStorage.removeItem("first_load");
-          localStorage.setItem("userinfo", JSON.stringify(res));
-        });
-      } */
+ 
     };
     return {
       ...toRefs(data),

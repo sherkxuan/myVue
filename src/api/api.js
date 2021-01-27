@@ -63,3 +63,27 @@ export function delAll(data) {
         data
     });
 }
+
+//查询接口调用日志前20条数据
+export function getApiLog() {
+    return service.request({
+        url: "/v1/getApiLog",
+        method: "get",
+    });
+}
+
+//查询统计API调用最多的20条记录
+export function getCountApi() {
+    return service.request({
+        url: "/v1/getCountApi",
+        method: "get",
+    });
+}
+
+//查询API调用次数小于1000的接口
+export function getApiWarning() {
+    return service.request({
+        url: "/v1/getApiWarning",
+        method: "get",
+    });
+}

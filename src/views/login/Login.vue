@@ -83,7 +83,13 @@ export default {
       adminLogin(from.form).then(res => {
         if (res.msg) {
           localStorage.setItem("token", res.token);
+          //设置第一次登录后加载的状态
+          //首页第一次加载
           localStorage.setItem('first_load',1)
+          //接口管理第一次加载
+          localStorage.setItem('api_load',1)
+
+
           message.success(res.msg);
           from.loading=false;
           router.push("/index");

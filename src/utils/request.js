@@ -2,7 +2,8 @@ import axios from "axios";
 import router from "@/router/index.js";
 import { message } from 'ant-design-vue';
 const service = axios.create({
-  //baseURL: "http://zx.cn",//生产环境
+  //baseURL: "http://api.sherkxuan.ren",//生产环境
+  //baseURL:this.$PathUrl,
   baseURL: "/api", //开发环境
   timeout: 5000 //请求超时
 });
@@ -39,6 +40,7 @@ service.interceptors.response.use(
       message.error(response.data.data)
       return false;
     } else {
+      message.warning(response.data.data)
       return response.data;
     }
     // 对响应数据做点什么

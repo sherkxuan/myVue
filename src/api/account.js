@@ -37,4 +37,11 @@ export function getMyInfo() {
         method: "get"
     });
 }
+//查询管理员列表
+export function getAdminList() {
+    return service.request({
+        url: "/v1/getAdminList",
+        method: "get"
+    });
+}
 

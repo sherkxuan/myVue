@@ -83,17 +83,6 @@ const routes = [
           icon:"icon-API"
         },
         component: () =>import("../views/api/Api.vue"),
-       /*  children:[
-          {
-            path: "/addApi",
-            name: "ApiLog",
-            meat:{
-              title:"新增接口",
-              icon:"icon-tongji"
-            },
-            component: () =>import("../views/api/Api_log.vue"),
-          },
-        ] */
       },
       {
         path: "/api_log",
@@ -103,6 +92,64 @@ const routes = [
           icon:"icon-tongji"
         },
         component: () =>import("../views/api/Api_log.vue"),
+      },
+    ]
+  },
+  {
+    path: "/management",
+    name: "Management",
+    meat:{
+      title:"平台管理",
+      icon:"icon-jiatianjiakuangxuanduoxuan-8"
+    },
+    component: () =>import("../views/layout/Index.vue"),
+    children:[
+      {
+        path: "/management",
+        name: "Management",
+        meat:{
+          title:"平台管理",
+          icon:"icon-jiatianjiakuangxuanduoxuan-8"
+        },
+        component: () =>import("../views/application/Management.vue"),
+      },
+      {
+        path: "/recycle",
+        name: "Recycle",
+        meat:{
+          title:"回收站",
+          icon:"icon-jiatianjiakuangxuanduoxuan-8"
+        },
+        component: () =>import("../views/application/Recycle.vue"),
+      },
+    ]
+  },
+  {
+    path: "/goods",
+    name: "Goods",
+    meat:{
+      title:"商品管理",
+      icon:"icon-jiatianjiakuangxuanduoxuan-8"
+    },
+    component: () =>import("../views/layout/Index.vue"),
+    children:[
+      {
+        path: "/goods",
+        name: "Goods",
+        meat:{
+          title:"商品管理",
+          icon:"icon-jiatianjiakuangxuanduoxuan-8"
+        },
+        component: () =>import("../views/goods/Goods.vue"),
+      },
+      {
+        path: "/skulist",
+        name: "SkuList",
+        meat:{
+          title:"模型管理",
+          icon:"icon-jiatianjiakuangxuanduoxuan-8"
+        },
+        component: () =>import("../views/goods/SkuList.vue"),
       },
     ]
   },

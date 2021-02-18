@@ -61,7 +61,7 @@
       <add-api ref="add" v-on:ApiOk="ApiOk"/>
     </a-modal>
   <!-- 修改 -->
-  <a-modal ok-text="修改" cancel-text="取消" :width="720" style="top: 20px;" v-model:visible="editBox" title="修改API" @ok="editClick" >
+  <a-modal :confirm-loading="confirmLoading" ok-text="修改" cancel-text="取消" :width="720" style="top: 20px;" v-model:visible="editBox" title="修改API" @ok="editClick" >
       <edit-api ref="edit" v-on:ApiOk="ApiOk"  :ApiInfo="ApiInfoData" />
   </a-modal>
   <!-- 查看 -->
@@ -127,7 +127,7 @@ const columns = [
   },
 ];
 export default {
-  components: {PlusCircleOutlined,DeleteOutlined,RedoOutlined,AddApi,EditApi,getApiById,LookApi,delAll,getApiWarning,notification},
+  components: {PlusCircleOutlined,DeleteOutlined,RedoOutlined,AddApi,EditApi,LookApi,notification},
   data() {
     return {
       data:[],
@@ -185,7 +185,6 @@ export default {
     //搜索
     onSearch(){
       //this.getList();
-      console.log('xs')
       let arr = [];
       this.searchDataAll.forEach((item,index)=>{
         if(item.name.includes(this.searchValue)){
@@ -243,13 +242,21 @@ export default {
     },
     //修改接口点击提交
     editClick(){
+      this.confirmLoading = true;
       this.$refs.edit.onSubmit(this.clickId);
+      let that = this;
+      setTimeout(()=>{
+        that.confirmLoading = false;
+      },500)
     },
     //新增接口点击提交
     addClick(){
       this.confirmLoading = true;
       this.$refs.add.onSubmit();
-      //this.confirmLoading = false;
+      let that = this;
+      setTimeout(()=>{
+        that.confirmLoading = false;
+      },500)
     },
     //删除接口
     del(id,data){
@@ -281,14 +288,6 @@ export default {
   font-size: 12px;
 }
 .table-header{
-  display: flex;
-  margin-top: 2%;
-  margin-bottom: 1%;
   width: 45%;
-  align-items: center;
-  justify-content: space-around;
-  .search{
-    width: auto;
-  }
 }
 </style>

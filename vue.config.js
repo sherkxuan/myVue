@@ -41,6 +41,7 @@ module.exports = {
     proxy: {
       "/api": {
         target: "http://zx.cn",
+        //target: "http://api.sherkxuan.ren",
         ws: false,//即时通讯
         changeOrigin: true,//是否开启跨域
         pathRewrite:{

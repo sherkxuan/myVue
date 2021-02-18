@@ -1,17 +1,17 @@
 <template>
   <a-form ref="ruleForm" :rules="rules" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
         <a-form-item label="接口名称" name="name">
-          <a-input v-model:value="form.name" placeholder="请输入API名称"/>
+          <a-input v-model:value="form.name"  maxlength="20" placeholder="请输入API名称"/>
         </a-form-item>
         <a-form-item label="接口说明" name="exp">
-          <a-textarea v-model:value="form.exp"  placeholder="请简单描述API的作用"/>
+          <a-textarea v-model:value="form.exp" maxlength="150"  placeholder="请简单描述API的作用"/>
         </a-form-item>
         <a-form-item label="路由地址" name="api_route">
-          <a-input v-model:value="form.api_route"  placeholder="请输入API的调用路由"/>
+          <a-input v-model:value="form.api_route" maxlength="30"  placeholder="请输入API的调用路由"/>
           <span class="ts"><span style="color:red">*</span>可通过此地址调用API</span>
         </a-form-item>
         <a-form-item label="映射地址" name="api_map">
-          <a-input v-model:value="form.api_map"  placeholder="请输入被映射的方法"/>
+          <a-input v-model:value="form.api_map" maxlength="50"  placeholder="请输入被映射的方法"/>
           <span class="ts"><span style="color:red">*</span>此地址指向控制器的具体方法,例如:Controller/Active</span>
         </a-form-item>
         <a-form-item label="请求方式" name="method">

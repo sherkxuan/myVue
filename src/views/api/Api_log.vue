@@ -38,7 +38,7 @@ export default {
             data:arr,
             header: ['接口名称', '调用者ip', '请求方式','调用时间'],
             waitTime:1000,
-            columnWidth: [150,100,100,150],
+            columnWidth: [150,120,100,180],
             align:['center','center','center','center'],
             rowNum:10,
             oddRowBGC:"#e7feff",

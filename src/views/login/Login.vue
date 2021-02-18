@@ -81,7 +81,7 @@ export default {
     const handleSubmit = () => {
       from.loading=true;
       adminLogin(from.form).then(res => {
-        if (res.msg) {
+        if (res.status==1) {
           localStorage.setItem("token", res.token);
           //设置第一次登录后加载的状态
           //首页第一次加载
@@ -95,7 +95,7 @@ export default {
           router.push("/index");
         } else {
           from.loading=false;
-          message.error(res.data);
+          message.error(res.msg);
         }
       });
     }

@@ -151,6 +151,33 @@ const routes = [
         },
         component: () =>import("../views/goods/SkuList.vue"),
       },
+      {
+        path: "/classification",
+        name: "Classification",
+        meat:{
+          title:"分类管理",
+          icon:"icon-jiatianjiakuangxuanduoxuan-8"
+        },
+        component: () =>import("../views/goods/Classification.vue"),
+      },
+      {
+        path: "/goodsServe",
+        name: "GoodsServe",
+        meat:{
+          title:"服务管理",
+          icon:"icon-jiatianjiakuangxuanduoxuan-8"
+        },
+        component: () =>import("../views/goods/GoodsServe.vue"),
+      },
+      {
+        path: "/recycle",
+        name: "Recycle",
+        meat:{
+          title:"回收站",
+          icon:"icon-jiatianjiakuangxuanduoxuan-8"
+        },
+        component: () =>import("../views/goods/Recycle.vue"),
+      },
     ]
   },
 ];

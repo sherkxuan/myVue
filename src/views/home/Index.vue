@@ -5,7 +5,7 @@
   <a-button @click="show = true;">打开</a-button>
 </template>
 <script>
-import SkuAdd from "../goods/component/SkuAdd.vue";
+import SkuAdd from "../goods/component/Sku.vue";
 export default {
   components:{SkuAdd},
   data(){

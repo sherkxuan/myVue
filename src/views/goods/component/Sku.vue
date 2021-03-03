@@ -14,13 +14,15 @@
           <div class="SpecValuesStyle">
             <div v-for="(item,index) in record.SpecValues" :key="index" class="inputList">
               <span v-if="record.SpecValues.length!=1"><a-button type="danger" shape="circle" @click="delSpecValueRow(record,item)" size="small"><template #icon><MinusOutlined /></template></a-button></span>
-              <a-input v-model:value="item.value" maxlength="15" placeholder="请输入规格值" />
+              <a-input v-model:value="item.value" maxlength="15" placeholder="请输入规格值" @blur="is_spec(record,item.value)"/>
             </div>
-            <div><a-button type="primary" shape="circle" @click="addSpecValueRow(record)" size="small"><template #icon><PlusOutlined /></template></a-button></div>
           </div>
       </template> 
       <template #action="{ record }">
           <span style="display: flex;width:100%;justify-content: space-around;font-size: 10px;">
+            <a-tooltip  :title="'添加'+record.SpecName">
+              <a-button type="primary" shape="circle" @click="addSpecValueRow(record)" size="small"><template #icon><PlusOutlined /></template></a-button>
+            </a-tooltip>  
             <a-button type="danger" shape="circle" @click="delSpecRow(record)" size="small"><DeleteOutlined /></a-button>
           </span>
       </template>
@@ -37,13 +39,16 @@
           <div class="SpecValuesStyle">
             <div v-for="(item,index) in record.PropValues" :key="index" class="inputList">
               <span v-if="record.PropValues.length!=1"><a-button type="danger" shape="circle" @click="delPropValueRow(record,item)" size="small"><template #icon><MinusOutlined /></template></a-button></span>
-              <a-input v-model:value="item.value" maxlength="15" placeholder="属性值可为空" />
+              <a-input v-model:value="item.value" maxlength="30" placeholder="属性值可为空" />
             </div>
             <div v-if="record.PropValues[0].value"><a-button type="primary" shape="circle" @click="addPropValueRow(record)" size="small"><template #icon><PlusOutlined /></template></a-button></div>
           </div>
       </template> 
       <template #action="{ record }">
           <span style="display: flex;width:100%;justify-content: space-around;font-size: 10px;">
+            <a-tooltip  :title="'添加'+record.PropName">
+              <a-button type="primary" shape="circle" @click="addPropValueRow(record)" size="small"><template #icon><PlusOutlined /></template></a-button>
+            </a-tooltip>
             <a-button type="danger" shape="circle" @click="delPropRow(record)" size="small"><DeleteOutlined /></a-button>
           </span>
       </template>
@@ -53,7 +58,7 @@
   <div class="footer">
     <div>
       <a-button type="dashed" @click="cancel">取消</a-button>
-      <a-button type="primary"  @click="ok" >确认</a-button>
+      <a-button type="primary"  @click="ok" :loading="loading">确认</a-button>
     </div>
   </div>
 </template>
@@ -63,6 +68,12 @@ import {DeleteOutlined,PlusOutlined,MinusOutlined} from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 export default {
   components: {DeleteOutlined,PlusOutlined,MinusOutlined},
+  props:{
+    getinfo:{
+        type: Object,
+        default: []
+    }
+  },
     data() {
       return {
         AddPropName:'',//添加属性框的值
@@ -70,11 +81,11 @@ export default {
         dataSource: [],//这个数组存放规格记录
         dataSource2:[],//这个数组存放属性记录
         ModelName:'',//商品模型名称
+        loading:false,//按钮加载状态
         columns: [
           {
             title: '规格名称',
             dataIndex: 'SpecName',
-            //slots: { customRender: 'SpecName' },
             width:150,
           },
           {
@@ -110,12 +121,64 @@ export default {
       };
     },
     methods:{
+      //判断是否有重复值
+      is_spec(rowData,e){
+        let rowId = this.dataSource.indexOf(rowData);
+         let delnum = 0;
+          this.dataSource[rowId].SpecValues.forEach((item2,index2)=>{
+            if(item2.value==e){
+                delnum++
+                if(delnum==2){
+                  message.warning('该值已重复');
+                  this.dataSource[rowId].SpecValues.splice(index2,1)
+                }
+            }
+          });
+      },
+      //初始方法
+      init(){
+          if(this.getinfo=='')return;
+          this.ModelName = this.getinfo.model_name;
+          this.getinfo.goodsModelSpec.forEach(item=>{
+              let arr = [];
+              item.value.forEach(itm=>{
+                  arr.push({
+                      value:itm,
+                      id:Date.now()
+                  })
+              })
+              this.dataSource.push({
+                 SpecName: item.spec_name,
+                 SpecValues:arr,
+                 id:item.id
+              })
+          });
+          this.getinfo.goodsModelProp.forEach(item2=>{
+              let arr2 = [];
+              item2.prop_values.forEach(itm2=>{
+                  arr2.push({
+                      value:itm2,
+                      id:Date.now()
+                  })
+              })
+              this.dataSource2.push({
+                 PropName: item2.prop_name,
+                 PropValues:arr2,
+                 id:item2.id
+              })
+          });
+      },
       //点击取消
       cancel(){
         this.$emit('cancel')
       },
       //点击确认
-      ok(){
+      async ok(){
+        let that = this;
+        this.loading = true;
+        setTimeout(()=>{
+          that.loading = false;
+        },1500);
         if(this.ModelName.trim()==''){
           message.warning('商品模型不能为空');
           return;
@@ -128,22 +191,25 @@ export default {
           message.warning('属性不能为空');
           return;
         }
+        let res = true;
         this.dataSource.forEach((item,index)=>{
           item.SpecValues.forEach((item2,index2)=>{
             if(item2.value==''){
                message.warning('有空的规格值,请检查');
-              return;
+                res = false;
             }
           });
         });
+        if(!res)return;
         this.dataSource2.forEach((ite,index)=>{
           ite.PropValues.forEach((ite2,index2)=>{
             if(ite2.value=='' && index2>0){
                message.warning('有空的属性值,请检查');
-              return;
+                res = false;
             }
           });
         });
+        if(!res)return;
         let arr1 = [],arr2 = [],arr1_values = [],arr2_values = [];
         this.dataSource.forEach((item,index)=>{
           item.SpecValues.forEach((item2,index2)=>{
@@ -242,7 +308,7 @@ export default {
       }
     },
     created(){
-      
+      this.init()
     }
   };
 </script>
@@ -273,7 +339,7 @@ export default {
     margin-bottom: 0.5%;
   }
   >div:last-child{
-    margin-left: 1%;
+    margin-left: 0%;
   }
 }
 .ModelTitle{

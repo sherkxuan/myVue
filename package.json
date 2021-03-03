@@ -9,12 +9,15 @@
   },
   "dependencies": {
     "@jiaminghi/data-view": "^2.10.0",
-    "ant-design-vue": "^2.0.0-rc.9",
+    "@packy-tang/vue-tinymce": "^1.1.0",
+    "@tinymce/tinymce-vue": "^4.0.0",
+    "ant-design-vue": "^2.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.8.3",
+    "tinymce": "^5.7.0",
     "vue": "^3.0.5",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.11",
@@ -27,11 +30,11 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-vue": "^7.5.0",
-    "less": "^4.1.0",
+    "eslint-plugin-vue": "^7.6.0",
+    "less": "^4.1.1",
     "less-loader": "^7.3.0",
     "prettier": "^1.19.1",
-    "sass": "^1.32.5",
+    "sass": "^1.32.7",
     "sass-loader": "^10.1.1",
     "stylus": "^0.54.8",
     "stylus-loader": "^4.3.3"

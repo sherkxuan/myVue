@@ -17,11 +17,12 @@ export function install(data) {
         data
     });
 }
-//删除API(单个删除)
-export function del(id) {
+//删除API
+export function del(data) {
     return service.request({
-        url: "/v1/delApi/id/"+id,
-        method: "get"
+        url: "/v1/delApi",
+        method: "delete",
+        data
     });
 }
 //验证请求路由或映射是否存在
@@ -55,7 +56,7 @@ export function editApi(id,data) {
         data
     });
 }
-//删除所有选中的id
+//删除所有选中的id(废弃)
 export function delAll(data) {
     return service.request({
         url: "/v1/delAll",

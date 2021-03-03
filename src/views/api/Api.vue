@@ -82,8 +82,7 @@ const columns = [
   {
     title: '接口名称',
     //dataIndex: 'name',
-    slots: { customRender: 'N_title' },
-    sorter: (a, b) => a.name.length - b.name.length,
+    slots: { customRender: 'N_title' }
   },
   {
     title: '路由',
@@ -102,13 +101,13 @@ const columns = [
     title: '剩余次数',
     //dataIndex: 'call_num',
     slots: { customRender: 'num' },
-    sorter: (a, b) => a.name.length - b.name.length,
+    sorter: (a, b) => a.call_num - b.call_num,
     width:120,
   },
   {
     title: '最后调用时间',
     dataIndex: 'update_time',
-    sorter: (a, b) => a.name.length - b.name.length,
+    sorter: (a, b) => a.update_time - b.update_time,
     width:180,
   },
   {
@@ -196,12 +195,11 @@ export default {
     },
     //批量删除
     delAll(){
-      console.log('pl:',this.ids);
       if(!this.ids){
          message.warning('没有选中数据!');
          return;
       }
-      delAll(this.ids).then(res=>{
+      del({id:this.ids,type:0}).then(res=>{
           if(res=='SUCCESS'){
             this.ids = '';
             message.success('已删除选中的数据!');
@@ -260,7 +258,7 @@ export default {
     },
     //删除接口
     del(id,data){
-      del(id).then(res=>{
+      del({id:id,type:0}).then(res=>{
         if(res=='SUCCESS'){
             let index = this.data.indexOf(data)
             this.data.splice(index,1);
@@ -288,6 +286,6 @@ export default {
   font-size: 12px;
 }
 .table-header{
-  width: 45%;
+  width: 550px;
 }
 </style>
